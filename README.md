@@ -1,70 +1,115 @@
-# Getting Started with Create React App
+# My Money Tracker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+My Money Tracker is a MERN (MongoDB, Express.js, React, Node.js) stack-based application that allows users to manage their finances efficiently. Users can input an amount with a description, and the application stores this data in the database for future reference.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Add transaction details with amount and description.
+- View all stored transactions.
+- Backend powered by Express.js and MongoDB.
+- Frontend developed using React for a dynamic and responsive user interface.
 
-### `yarn start`
+## Technologies Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Frontend:** React, CSS
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB
+- **Version Control:** Git
+- **Environment Variables:** Managed using `.env`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation and Setup
 
-### `yarn test`
+To get the project running on your local machine:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Prerequisites
 
-### `yarn build`
+Ensure you have the following installed:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Node.js (v14 or above)
+- MongoDB (local or cloud instance)
+- Git
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Steps
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. **Clone the Repository**:
 
-### `yarn eject`
+   ```bash
+   git clone <repository-url>
+   cd my-money-tracker
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. **Install Dependencies**:
+   Navigate to the backend (`api`) and frontend (`src`) directories, and run the following commands:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```bash
+   # Install backend dependencies
+   cd api
+   npm install
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   # Install frontend dependencies
+   cd ../src
+   npm install
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+3. **Set Up Environment Variables**:
+   Create a `.env` file in the `api` directory and add the following variables:
 
-## Learn More
+   ```env
+   MONGO_URI=<your-mongodb-connection-string>
+   PORT=5000
+   ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+4. **Run the Application**:
+   Open two terminals to run the backend and frontend servers:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   **Backend**:
 
-### Code Splitting
+   ```bash
+   cd api
+   npm start
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+   **Frontend**:
 
-### Analyzing the Bundle Size
+   ```bash
+   cd src
+   npm start
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+5. **Access the App**:
+   Visit `http://localhost:3000` in your browser.
 
-### Making a Progressive Web App
+## Folder Structure Overview
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Backend (`api`):
 
-### Advanced Configuration
+- **`index.js`**: Entry point for the backend.
+- **`models`**: Contains Mongoose schemas and models.
+- **`.env`**: Holds environment variables.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Frontend (`src`):
 
-### Deployment
+- **`App.js`**: Main React component.
+- **`index.js`**: Entry point for the React app.
+- **`App.css`**: Styling for the app.
+- **Additional Files**: Test files, setup scripts, and assets like `logo.svg`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Future Enhancements
 
-### `yarn build` fails to minify
+- Add user authentication for personalized transaction management.
+- Implement data visualization for spending insights.
+- Add support for multiple currencies.
+- Create a mobile-friendly version of the app.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Contributing
+
+Contributions are welcome! Feel free to fork this repository, make changes, and submit a pull request.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+## Sample Screenshot
+
+Below is a sample screenshot of the My Money Tracker app:
+![My Money Tracker Screenshot](public/images/sample.png)
