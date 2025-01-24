@@ -23,8 +23,13 @@ app.post("/api/transaction", async (request, response) => {
     datetime,
     price,
   });
-
   response.json(transaction);
+});
+
+app.get("/api/transactions", async (request, response) => {
+  await mongoose.connect(process.env.MONGO_URL);
+  const transactions = await Transaction.find();
+  response.json(transactions);
 });
 
 app.listen(4040);

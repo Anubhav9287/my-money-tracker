@@ -1,20 +1,33 @@
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const [name, setName] = useState("");
   const [datetime, setDatetime] = useState("");
   const [description, setDescription] = useState("");
+  const [transactions, setTransactions] = useState([]);
+  const apiUrl = process.env.REACT_APP_API_URL;
 
-  function addNewTransaction(ev) {
+  useEffect(() => {
+    getTransactions().then((transactions) => {
+      setTransactions(transactions);
+    });
+  });
+
+  async function getTransactions() {
+    const url = `${apiUrl}/transactions`;
+    const response = await fetch(url);
+    return await response.json();
+  }
+
+  async function addNewTransaction(ev) {
     console.log("test");
     ev.preventDefault();
-    const apiUrl = process.env.REACT_APP_API_URL;
     console.log(apiUrl);
     const url = `${apiUrl}/transaction`;
     const price = name.split(" ")[0];
     console.log(JSON.stringify({ name, description, datetime, price }));
-    fetch(url, {
+    await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -29,13 +42,14 @@ function App() {
           // Throw an error if the HTTP status is not OK
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
+        setName("");
+        setDatetime("");
+        setDescription("");
         // Check if the response body is empty
         if (response.headers.get("content-length") === "0") {
           console.log("No content in response body");
           return null; // Return null if there's no content
         }
-
         return response.json(); // Parse JSON if body exists
       })
       .then((data) => {
@@ -51,10 +65,18 @@ function App() {
 
     console.log(url);
   }
+
+  let balance = 0;
+  for (const transaction of transactions) {
+    balance += transaction.price;
+  }
+  const [integerPart, decimalPart] = balance.toFixed(2).split(".");
+
   return (
     <main>
       <h1>
-        $400<span>.00</span>
+        ${integerPart}
+        <span>.{decimalPart}</span>
       </h1>
       <form onSubmit={addNewTransaction}>
         <div className="basic">
@@ -84,46 +106,25 @@ function App() {
         <button type="submit">Add new Transaction</button>
       </form>
       <div className="transactions">
-        <div className="transaction">
-          <div className="left">
-            <div className="name">New Samsung TV</div>
-            <div className="description">It was time of new TV</div>
-          </div>
-          <div className="right">
-            <div className="price red">-$500</div>
-            <div className="datetime">2022-12-18 15:45</div>
-          </div>
-        </div>
-        <div className="transaction">
-          <div className="left">
-            <div className="name">New Apple Job</div>
-            <div className="description">It was time of new TV</div>
-          </div>
-          <div className="right">
-            <div className="price green">+$8000</div>
-            <div className="datetime">2022-12-18 15:45</div>
-          </div>
-        </div>
-        <div className="transaction">
-          <div className="left">
-            <div className="name">IPhone</div>
-            <div className="description">It was time of new TV</div>
-          </div>
-          <div className="right">
-            <div className="price red">-$1500</div>
-            <div className="datetime">2022-12-18 15:45</div>
-          </div>
-        </div>
-        <div className="transaction">
-          <div className="left">
-            <div className="name">Garmin Watch</div>
-            <div className="description">It was time of new Watch</div>
-          </div>
-          <div className="right">
-            <div className="price red">-$600</div>
-            <div className="datetime">2022-12-18 15:45</div>
-          </div>
-        </div>
+        {transactions.length > 0 &&
+          transactions.map((transaction, index) => (
+            <div className="transaction" key={transaction.id || index}>
+              <div className="left">
+                <div className="name">{transaction.name}</div>
+                <div className="description">{transaction.description}</div>
+              </div>
+              <div className="right">
+                <div
+                  className={
+                    "price " + (transaction.price > 0 ? "green" : "red")
+                  }
+                >
+                  {transaction.price}
+                </div>
+                <div className="datetime">{transaction.datetime}</div>
+              </div>
+            </div>
+          ))}
       </div>
     </main>
   );
